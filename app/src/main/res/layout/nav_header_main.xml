@@ -17,6 +17,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        android:gravity="center"
         android:onClick="loginBtnNavClicked"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
