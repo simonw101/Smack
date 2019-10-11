@@ -1,9 +1,10 @@
-package com.example.smack
+package com.example.smack.COntroller
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.smack.R
 
 class LoginActivity : AppCompatActivity() {
 

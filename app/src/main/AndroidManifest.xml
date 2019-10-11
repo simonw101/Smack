@@ -5,16 +5,18 @@
 
     <dist:module dist:instant="true" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateUserActivity"></activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".COntroller.CreateUserActivity"></activity>
+        <activity android:name=".COntroller.LoginActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".COntroller.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
