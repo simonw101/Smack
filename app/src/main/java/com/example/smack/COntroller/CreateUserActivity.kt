@@ -165,11 +165,9 @@ class CreateUserActivity : AppCompatActivity() {
 
             createSpinner.visibility = View.VISIBLE
 
-
         } else {
 
             createSpinner.visibility = View.INVISIBLE
-
 
         }
 
