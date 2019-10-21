@@ -8,6 +8,8 @@ const val URL_LOGIN = "${BASE_URL}account/login"
 
 const val URL_CREATE_USER = "${BASE_URL}user/add"
 
+const val URL_GET_USER = "${BASE_URL}user/byEmail/"
+
 // BroadCast Constants
 
 const val BROADCAST_USER_DATA_CHANGED = "BROADCAST_USER_DATA_CHANGE"
