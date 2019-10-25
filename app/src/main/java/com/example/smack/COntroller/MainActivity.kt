@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -26,16 +27,28 @@ import com.example.smack.Utilities.BROADCAST_USER_DATA_CHANGED
 import com.example.smack.Utilities.SOCKET_URL
 import io.socket.client.IO
 import io.socket.emitter.Emitter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
 
     val socket = IO.socket(SOCKET_URL)
 
+    lateinit var channelAdapter: ArrayAdapter<Channel>
+
+    private fun setUpAdapters() {
+
+        channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
+
+        channel_list.adapter = channelAdapter
+
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
+
     private val userDataChangeReciever = object : BroadcastReceiver() {
 
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent?) {
             if (AuthService.isLoggedIn) {
 
                 usernameNavHeader.text = UserDataService.name
@@ -44,6 +57,15 @@ class MainActivity : AppCompatActivity() {
                 userImageNavHeader.setImageResource(resourceId)
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "LogOut"
+                MessageService.getChannels(context) {complete ->
+
+                    if (complete) {
+
+                        channelAdapter.notifyDataSetChanged()
+
+                    }
+
+                }
             }
         }
 
@@ -76,6 +98,8 @@ class MainActivity : AppCompatActivity() {
         socket.connect()
 
         socket.on("channelCreated", onNewChannel)
+
+        setUpAdapters()
 
     }
 
@@ -169,9 +193,7 @@ class MainActivity : AppCompatActivity() {
 
             MessageService.channels.add(newChannel)
 
-            println(newChannel.name)
-            println(newChannel.description)
-            println(newChannel.id)
+            channelAdapter.notifyDataSetChanged()
         }
 
     }
