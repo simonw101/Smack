@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.GravityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.smack.Model.Channel
 import com.example.smack.R
@@ -28,6 +29,7 @@ import com.example.smack.Utilities.SOCKET_URL
 import io.socket.client.IO
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     val socket = IO.socket(SOCKET_URL)
 
     lateinit var channelAdapter: ArrayAdapter<Channel>
+
+    var selectedChannel : Channel? = null
 
     private fun setUpAdapters() {
 
@@ -57,11 +61,16 @@ class MainActivity : AppCompatActivity() {
                 userImageNavHeader.setImageResource(resourceId)
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "LogOut"
-                MessageService.getChannels(context) {complete ->
+                MessageService.getChannels {complete ->
 
                     if (complete) {
+                        if (MessageService.channels.count() > 0) {
 
-                        channelAdapter.notifyDataSetChanged()
+                            selectedChannel = MessageService.channels[0]
+                            channelAdapter.notifyDataSetChanged()
+                            updateWithChannel()
+                        }
+
 
                     }
 
@@ -69,6 +78,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun updateWithChannel() {
+
+        mainChannelName.text = "#${selectedChannel?.name}"
+
+        //downloadMessage for channel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,6 +116,14 @@ class MainActivity : AppCompatActivity() {
         socket.on("channelCreated", onNewChannel)
 
         setUpAdapters()
+
+        channel_list.setOnItemClickListener { _, _, i, _ ->
+
+            selectedChannel = MessageService.channels[i]
+            drawerLayout.closeDrawer(GravityCompat.START)
+            updateWithChannel()
+
+        }
 
         if (App.prefs.isLoggedIn) {
 
@@ -157,7 +181,7 @@ class MainActivity : AppCompatActivity() {
             val dialogView = layoutInflater.inflate(R.layout.add_channel_dialog, null)
 
             builder.setView(dialogView)
-                .setPositiveButton("Add") { dialog: DialogInterface?, i: Int ->
+                .setPositiveButton("Add") { _: DialogInterface?, _: Int ->
 
                     //perform logic when clicked
 
@@ -175,7 +199,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 }
-                .setNegativeButton("Cancel") { dialog: DialogInterface?, i: Int ->
+                .setNegativeButton("Cancel") { _: DialogInterface?, _: Int ->
 
                     //cancel and close the dialog
 
