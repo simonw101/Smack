@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private val userDataChangeReciever = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent?) {
-            if (AuthService.isLoggedIn) {
+            if (App.prefs.isLoggedIn) {
 
                 usernameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
@@ -101,6 +101,12 @@ class MainActivity : AppCompatActivity() {
 
         setUpAdapters()
 
+        if (App.prefs.isLoggedIn) {
+
+            AuthService.findUserByEmail(this) {}
+
+        }
+
     }
 
     override fun onResume() {
@@ -124,7 +130,7 @@ class MainActivity : AppCompatActivity() {
 
     fun loginBtnNavClicked(view: View) {
 
-        if (AuthService.isLoggedIn) {
+        if (App.prefs.isLoggedIn) {
 
             UserDataService.logOut()
             usernameNavHeader.text = ""
@@ -144,7 +150,7 @@ class MainActivity : AppCompatActivity() {
 
     fun addChannelClicked(view: View) {
 
-        if (AuthService.isLoggedIn) {
+        if (App.prefs.isLoggedIn) {
 
             val builder = AlertDialog.Builder(this)
 
