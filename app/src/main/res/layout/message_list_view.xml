@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/messageUserImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/dark19" />
+
+    <TextView
+        android:id="@+id/messageUserNameLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/messageUserImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="JonnyB" />
+
+    <TextView
+        android:id="@+id/timestampLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/messageUserNameLbl"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mar 1, 10:30pm" />
+
+    <TextView
+        android:id="@+id/messageBodyLbl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/messageUserImage"
+        app:layout_constraintTop_toBottomOf="@+id/timestampLbl"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse enim est, pellentesque et mollis ut, facilisis ut enim. Donec eget eleifend lectus. Aliquam ac arcu aliquet, vulputate libero in, volutpat lacus. Proin imperdiet placerat risus eget pulvinar. Sed pharetra enim accumsan ante laoreet pretium. Duis in mollis dui. Quisque varius odio quis dolor maximus luctus. Donec tincidunt arcu hendrerit tellus malesuada dignissim.  Curabitur pretium ligula et arcu congue elementum. Vestibulum et interdum mi. Ut in turpis consectetur, auctor erat ac, rutrum nisl. Donec quis velit diam. Pellentesque sodales ligula sit amet nulla blandit, non faucibus nibh bibendum. Fusce ultrices mauris non tortor varius, eu scelerisque arcu condimentum. Aenean in ipsum vel erat aliquet cursus. In dolor elit, sodales eget rutrum vitae, placerat vitae urna. Nam auctor tristique lorem, sed euismod orci eleifend vitae. Phasellus quis dignissim nibh. Ut arcu enim, porta vitae felis eget, aliquet sollicitudin est. Mauris condimentum volutpat rutrum. Sed malesuada, libero sit amet imperdiet eleifend, nisl sem aliquam lacus, ac dignissim augue augue at lectus.  Etiam tempor tortor sit amet auctor efficitur. Nullam nec est tristique, hendrerit massa non, rutrum orci. Cras dolor eros, efficitur scelerisque suscipit sed, rutrum nec ligula. Nulla non nisl consectetur velit cursus tempus sed a metus. Praesent id hendrerit mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut fermentum sem non lacinia finibus. Ut venenatis magna ac nunc rhoncus consectetur." />
+</androidx.constraintlayout.widget.ConstraintLayout>

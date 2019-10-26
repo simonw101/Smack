@@ -19,6 +19,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smack.Adapters.MessageAdapter
 import com.example.smack.Model.Channel
 import com.example.smack.Model.Message
 import com.example.smack.R
@@ -39,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var channelAdapter: ArrayAdapter<Channel>
 
+    lateinit var messageAdapter: MessageAdapter
+
     var selectedChannel: Channel? = null
 
     private fun setUpAdapters() {
@@ -47,6 +51,14 @@ class MainActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
 
         channel_list.adapter = channelAdapter
+
+        messageAdapter = MessageAdapter(this, MessageService.messages)
+
+        messageListView.adapter = messageAdapter
+
+        val layoutManager = LinearLayoutManager(this)
+
+        messageListView.layoutManager = layoutManager
 
     }
 
@@ -99,9 +111,10 @@ class MainActivity : AppCompatActivity() {
 
                 if (complete) {
 
-                    for (message in MessageService.messages) {
+                    messageAdapter.notifyDataSetChanged()
+                    if (messageAdapter.itemCount > 0) {
 
-                        println(message.message)
+                        messageListView.smoothScrollToPosition(messageAdapter.itemCount - 1)
 
                     }
 
@@ -187,6 +200,8 @@ class MainActivity : AppCompatActivity() {
         if (App.prefs.isLoggedIn) {
 
             UserDataService.logOut()
+            channelAdapter.notifyDataSetChanged()
+            messageAdapter.notifyDataSetChanged()
             usernameNavHeader.text = ""
             userEmailNavHeader.text = ""
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
@@ -287,7 +302,8 @@ class MainActivity : AppCompatActivity() {
                         timeStamp
                     )
                     MessageService.messages.add(newMessage)
-
+                    messageAdapter.notifyDataSetChanged()
+                    messageListView.smoothScrollToPosition(messageAdapter.itemCount -1)
 
                 }
 
