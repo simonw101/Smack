@@ -157,6 +157,12 @@ class MainActivity : AppCompatActivity() {
 
         setUpAdapters()
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            userDataChangeReciever, IntentFilter(
+                BROADCAST_USER_DATA_CHANGED
+            )
+        )
+
         channel_list.setOnItemClickListener { _, _, i, _ ->
 
             selectedChannel = MessageService.channels[i]
@@ -171,17 +177,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    }
-
-    override fun onResume() {
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-            userDataChangeReciever, IntentFilter(
-                BROADCAST_USER_DATA_CHANGED
-            )
-        )
-
-        super.onResume()
     }
 
     override fun onDestroy() {
@@ -207,6 +202,7 @@ class MainActivity : AppCompatActivity() {
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginBtnNavHeader.text = "Login"
+            mainChannelName.text = "Please login"
 
         } else {
 
